@@ -31,13 +31,13 @@ def load_related_tags_from_wykop():
     return G
 
 
-def load_graph_from_file():
-    return nx.read_gml("graph.gml")
+def load_graph_from_file(file):
+    return nx.read_gml(f"{file}")
 
 
 def display_graph(G):
     plt.figure(figsize=(15, 10))
-    pos = nx.spring_layout(G, k=0.4, iterations=500)
+    pos = nx.spring_layout(G, k=1, iterations=50)
 
     # wierzchołki
     nx.draw_networkx_nodes(G, pos, node_size=[150 + v * 40 for v in dict(G.degree).values()])
@@ -86,30 +86,34 @@ def calculate_flow(G):
 # Main program loop
 if __name__ == "__main__":
     control = True
+    file = 'graph.gml'
     while control:
         action = input("Dostępne Akcje:  \n"
                        "1: Wyświetlenie wykresu\n"
                        "2: Znalezienie najkrótszej ścieżki pomiędzy wierzchołkami\n"
                        "3: Czy eulerowski i wyznaczenie ścieżki eulerowskiej\n"
                        "4: Wyznaczenie przepływów pomiędzy wierzchołkami\n"
-                       "5: Wyjdź\n"
+                       "5: Załadowanie grafu\n"
+                       "6: Wyjdź\n"
                        "Wybór:")
 
-        if action == '5':
+        if action == '6':
             control = False
         elif action == '1':
-            g = load_graph_from_file()
+            g = load_graph_from_file(file=file)
             display_graph(g)
             k = input("Naciśnij przycisk by przejść dalej:")
         elif action == '2':
-            g = load_graph_from_file()
+            g = load_graph_from_file(file=file)
             find_shortest_path(g)
             k = input("Naciśnij przycisk by przejść dalej:")
         elif action == '3':
-            g = load_graph_from_file()
+            g = load_graph_from_file(file=file)
             is_eulerian(g)
             k = input("Naciśnij przycisk by przejść dalej:")
         elif action == '4':
-            g = load_graph_from_file()
+            g = load_graph_from_file(file=file)
             calculate_flow(g)
             k = input("Naciśnij przycisk by przejść dalej:")
+        elif action == '5':
+            file = input("Podaj nazwe:")
