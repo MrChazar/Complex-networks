@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import time
 from pyvis.network import Network
+import pandas as pd
 matplotlib.use('TkAgg')
 
 
@@ -13,7 +14,7 @@ def load_graph_from_file(file):
 
 def display_graph_networkx(G):
     plt.figure(figsize=(15, 10))
-    pos = nx.spring_layout(G, k=1, iterations=50)
+    pos = nx.spring_layout(G, k=1.5, iterations=100)
 
     # wierzchołki
     nx.draw_networkx_nodes(G, pos, node_size=[150 + v * 40 for v in dict(G.degree).values()])
@@ -35,6 +36,10 @@ def display_graph_pyvis(G):
 
 def display_incidence_matrix(G):
     incidence_matrix = nx.incidence_matrix(G).todense()
+    # Przekonwertuj macierz do DataFrame i zapisz jako CSV
+    df = pd.DataFrame(incidence_matrix)
+    df.to_csv("macierz_incydencji.csv", index=False, header=False)
+
     print("Macierz incydencji:")
     print(incidence_matrix)
 
@@ -43,6 +48,8 @@ def display_adjacency_matrix(G):
     adjacency_matrix = nx.adjacency_matrix(G).todense()
     print("Macierz sąsiedztwa:")
     print(adjacency_matrix)
+    df = pd.DataFrame(adjacency_matrix)
+    df.to_csv("macierz_sąsiedztwa.csv", index=False, header=False)
 
 
 # Main program loop
