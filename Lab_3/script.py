@@ -116,11 +116,14 @@ if __name__ == "__main__":
         elif action == '3':
             g = load_graph_from_file(file=file)
             display_graph_statistics(g)
+            input("Naciśnij przycisk by przejść dalej:")
         elif action == '4':
             g = load_graph_from_file(file=file)
             vertex = input("Podaj wierzchołek: ")
             display_vertex_statistics(g, vertex)
+            input("Naciśnij przycisk by przejść dalej:")
         elif action == '5':
             g = load_graph_from_file(file=file)
             edge = eval(input("Podaj krawędź jako krotkę (np. ('wierzchołek1', 'wierzchołek2')): "))
             display_edge_statistics(g, edge)
+            input("Naciśnij przycisk by przejść dalej:")
