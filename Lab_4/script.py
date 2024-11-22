@@ -4,7 +4,6 @@ from pyvis.network import Network
 
 
 def project_simple(G):
-    """Projekcja prosta - łączymy wierzchołki w pierwszej kategorii, jeśli mają wspólnego sąsiada."""
     bipartite_nodes = {n for n, d in G.nodes(data=True) if d.get('bipartite') == 0}
     P = nx.Graph()
     for node in bipartite_nodes:
@@ -17,7 +16,6 @@ def project_simple(G):
 
 
 def project_weighted_jaccard(G):
-    """Projekcja ważona z Jaccardem."""
     bipartite_nodes = {n for n, d in G.nodes(data=True) if d.get('bipartite') == 0}
     P = nx.Graph()
     for node1 in bipartite_nodes:
@@ -37,6 +35,9 @@ def display_graph_networkx(G, title="Graph"):
     plt.figure(figsize=(12, 8))
     pos = nx.spring_layout(G, seed=42)
     nx.draw(G, pos, with_labels=True, node_size=500, node_color="lightblue", edge_color="gray")
+    nx.draw_networkx_labels(G, pos, font_size=10, font_color="black")
+    edge_weights = nx.get_edge_attributes(G, "weight")
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_weights, font_size=8)
     plt.title(title)
     plt.show()
 
@@ -44,14 +45,14 @@ def display_graph_networkx(G, title="Graph"):
 def display_graph_networkx_normal(G, title="Graph"):
     plt.figure(figsize=(12, 8))
 
-    nodes = {n for n, d in G.nodes(data=True) if d.get("bipartite") == 0}  # Przykładowo
+    nodes = {n for n, d in G.nodes(data=True) if d.get("bipartite") == 0} 
     pos = nx.bipartite_layout(G, nodes)
     nx.draw(G, pos, with_labels=True, node_size=500, node_color="lightblue", edge_color="gray")
     plt.title(title)
     plt.show()
 
 if __name__ == "__main__":
-    G = nx.davis_southern_women_graph()
+    G = nx.bipartite.random_graph(5, 8, 0.25, seed=42)
     while True:
         action = input("1: Wyświetlenie grafu\n2: Projekcja prosta\n3: Projekcja ważona (Jaccard)\n4: Wyjdź\nWybór:")
         if action == '1':
