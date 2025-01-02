@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 api_service_name = "youtube"
 api_version = "v3"
-DEVELOPER_KEY = "not_your_business"
+DEVELOPER_KEY = "AIzaSyA3WzJGLAI8raiDJZfdKa9sdWcxBO6UqGs"
 
 youtube = googleapiclient.discovery.build(
     api_service_name, api_version, developerKey=DEVELOPER_KEY)
