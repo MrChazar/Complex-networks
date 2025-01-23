@@ -19,10 +19,10 @@ def handle_data(starting_user):
     while True:
         max_attempts = 5
         test = []
-        time.sleep(0.1)
+        time.sleep(0.01)
         for i in range(max_attempts):
             try:
-                time.sleep(0.05)
+                time.sleep(0.01)
                 test = api.make_request(f"profile/users/{starting_user}/observed/users/following?page={iter}")
                 time.sleep(0.05)
                 break
@@ -75,4 +75,4 @@ def build_graph(starting_user, max_repeats=5):
 starting_user = 'freshmanR'
 G = build_graph(starting_user, max_repeats=10)
 print(G)
-nx.write_gml(G, "graph.gml")
+nx.write_gml(G, "test_graph.gml")
