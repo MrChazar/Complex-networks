@@ -1,11 +1,13 @@
 import React from 'react';
 
+interface trendResultProps {
+    text: string;
+}
 
-
-const TrendResult: React.FC = () => {
+const TrendResult: React.FC<trendResultProps> = (props) => {
     return (
         <div>
-            <h1>Wynik</h1>
+            <p>{props.text}</p>
         </div>
     );
 };

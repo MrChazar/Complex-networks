@@ -12,6 +12,7 @@ from nltk.corpus import stopwords
 import string
 import time
 import spacy
+import io
 
 api = WykopAPI("w55988974f3d3194b7dd98c7ab2c6765c2", "05f093e009943e9e9b911f2a8a9f1a00")
 api.authenticate()
@@ -70,7 +71,16 @@ def generate_text_for_wordcloud(tag_name, number_of_pages):
                       not token.is_stop and not token.is_punct and token.pos_ not in ["VERB", "AUX", "PRON"]]
     text = " ".join(cleaned_tokens)
 
-    return text
+    """
+    Próba zapisu
+         buffer = io.BytesIO()
+        plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight')
+        buffer.seek(0)
+        files = {'file': ('wykres.png', buffer, 'image/png')}
+    """
+
+
+    return {"text": text}
 
 
 

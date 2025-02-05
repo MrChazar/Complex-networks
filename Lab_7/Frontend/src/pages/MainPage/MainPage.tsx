@@ -2,23 +2,45 @@ import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { Link } from 'preact-router'; // Użyj Link zamiast <a>
 import './MainPage.css';
-import { Axios } from 'axios';
+import axios from 'axios';
 import 'bootstrap/scss/bootstrap.scss';
 import * as bootstrap from 'bootstrap'
 import TrendForm from '../../components/TrendForm/TrendForm'
-type ApiResponse = {
-    name: string;
-};
+import TrendResult from '../../components/TrendResult/TrendResult';
+
+interface FormData {
+    tags: string;
+    pages: number;
+}
+
+interface FormResponse{
+    text: string;
+}
 
 const MainPage = () => {
-    const [data, setData] = useState<ApiResponse | null>(null);
+    const [formResponse, setFormResponse] = useState<FormResponse | null>(null);
+    const [loadingResponse, setLoadingResponse] = useState<boolean>(false);
 
-    useEffect(() => {
-        fetch("http://localhost:8000/get-name")
-            .then((response) => response.json())
-            .then((data) => setData(data));
-            console.log(data);
-    }, []);
+    const onSubmit = (formData: FormData) => {
+        alert(`Wysłano formularz z tagami: ${formData.tags} i liczbą stron: ${formData.pages}`);
+        setLoadingResponse(true);
+        setFormResponse(null)
+        axios.get(`http://localhost:8000/trend/word-cloud`, {
+            params: {
+                tag_name: formData.tags,
+                number_of_pages: formData.pages
+            }
+          })
+          .then(response => {
+            setFormResponse(response.data);
+            console.log(response.data);
+            setLoadingResponse(false);
+          })
+          .catch(error => {
+              console.error("Błąd Axios:", error);
+              setLoadingResponse(false);
+          });
+    };
 
     return (
         <div className="App">
@@ -31,11 +53,15 @@ const MainPage = () => {
 
             <div className="container justify-content-center align-items-center" id="content">
                 <div id="ChartSelector" >
-                    <TrendForm></TrendForm>
+                    <TrendForm onSubmit={onSubmit}></TrendForm>
                 </div>
 
                 <div id="ChartSelector">
-                    <h1>Wykres</h1>
+                    {loadingResponse ? <h1>Ładowanie...</h1>: null}
+                </div>
+
+                <div id="ChartSelector">
+                    {formResponse ? <TrendResult text={formResponse.text}></TrendResult>: null}
                 </div>
             </div>
 
