@@ -20,12 +20,14 @@ interface FormResponse{
 const MainPage = () => {
     const [formResponse, setFormResponse] = useState<FormResponse | null>(null);
     const [loadingResponse, setLoadingResponse] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     const onSubmit = (formData: FormData) => {
         alert(`Wysłano formularz z tagami: ${formData.tags} i liczbą stron: ${formData.pages}`);
         setLoadingResponse(true);
         setFormResponse(null)
-        axios.get(`http://localhost:8000/trend/word-cloud`, {
+        setError(false)
+        axios.get(`http://localhost:8000/trend/trend-detection`, {
             params: {
                 tag_name: formData.tags,
                 number_of_pages: formData.pages
@@ -39,6 +41,7 @@ const MainPage = () => {
           .catch(error => {
               console.error("Błąd Axios:", error);
               setLoadingResponse(false);
+              setError(true);
           });
     };
 
@@ -58,6 +61,7 @@ const MainPage = () => {
 
                 <div id="ChartSelector">
                     {loadingResponse ? <h1>Ładowanie...</h1>: null}
+                    {error ? <h1>Wystąpił błąd</h1>: null}
                 </div>
 
                 <div id="ChartSelector">

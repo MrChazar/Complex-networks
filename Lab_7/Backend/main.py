@@ -3,6 +3,7 @@ import asyncio
 from fastapi import FastAPI, Query
 from starlette.middleware.cors import CORSMiddleware
 import services.WordTransform as Wf
+import services.TrendDetection as td
 
 app = FastAPI()
 
@@ -16,12 +17,21 @@ app.add_middleware(
 
 
 
-# Asynchroniczny endpoint
+# Asynchroniczny endpoint dla stworzenia word cloud
 @app.get("/trend/word-cloud")
 async def get_text_for_wordcloud(tag_name: str = Query(..., description="Nazwa tagu do analizy"),
     number_of_pages: int = Query(..., description="Liczba stron do przetworzenia")
 ):
     data = await asyncio.to_thread(Wf.generate_text_for_wordcloud, tag_name, number_of_pages)
+    return data
+
+
+# Asynchroniczny endpoint dla wykrycia trendów przez gemini
+@app.get("/trend/trend-detection")
+async def trend_detection(tag_name: str = Query(..., description="Nazwa tagu do analizy"),
+    number_of_pages: int = Query(..., description="Liczba stron do przetworzenia")):
+    data = await asyncio.to_thread(td.trend_detection, tag_name, number_of_pages)
+    print(data)
     return data
 
 if __name__ == '__main__':
