@@ -65,7 +65,7 @@ def generate_text_for_wordcloud(tag_name, number_of_pages):
         except:
             continue
     text = text.replace("\n", " ")
-    nlp = spacy.load("pl_core_news_lg")
+    nlp = spacy.load("pl_core_news_sm")
     doc = nlp(text)
     cleaned_tokens = [token.lemma_.lower() for token in doc if
                       not token.is_stop and not token.is_punct and token.pos_ not in ["VERB", "AUX", "PRON"]]

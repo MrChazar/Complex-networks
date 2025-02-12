@@ -59,7 +59,7 @@ const TrendForm : React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <button type="submit" className="btn btn-dark m-3">
-            Wygeneruj wykres
+            Wygeneruj podsumowanie
         </button>
       </form>
     </div>

@@ -11,6 +11,7 @@ import spacy
 import io
 import base64
 from PIL import Image
+import nltk
 
 
 api = WykopAPI("w55988974f3d3194b7dd98c7ab2c6765c2", "05f093e009943e9e9b911f2a8a9f1a00")
