@@ -31,7 +31,6 @@ async def get_text_for_wordcloud(tag_name: str = Query(..., description="Nazwa t
 async def trend_detection(tag_name: str = Query(..., description="Nazwa tagu do analizy"),
     number_of_pages: int = Query(..., description="Liczba stron do przetworzenia")):
     data = await asyncio.to_thread(td.trend_detection, tag_name, number_of_pages)
-    print(data)
     return data
 
 if __name__ == '__main__':

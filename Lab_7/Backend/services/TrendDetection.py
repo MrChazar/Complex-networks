@@ -13,7 +13,7 @@ import string
 import time
 import spacy
 import io
-from Backend.notebooks import handy_functions
+from notebooks import handy_functions
 from google import genai
 from google.genai import types
 
@@ -39,7 +39,7 @@ def trend_detection(tag_name, number_of_pages):
     - Jeśli w danych często pojawia się tag "#rpa" i tematy związane z polityką, zwróć odpowiedź: "Główny trend: Dyskusje na temat polityki w RPA (#rpa)".
     - Jeśli w danych nie ma powtarzających się tematów, zwróć odpowiedź: "Brak trendów".
 
-    Zwracaj odpowiedzi w formie zwięzłego podsumowania.
+    Zwróc tylko 3 najbardziej poruszane tematy w formie zwięzłego podsumowania.
     1. Temat Jakiś
     2. Temat inny
     """
@@ -58,5 +58,5 @@ def trend_detection(tag_name, number_of_pages):
         )
     )
 
-    return response.text
+    return {"text": response.text}
 
