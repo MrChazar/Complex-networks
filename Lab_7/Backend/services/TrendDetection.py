@@ -1,19 +1,5 @@
-import numpy as np
-import pandas as pd
-import networkx as nx
 from wykop import WykopAPI
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.probability import FreqDist
-from nltk.corpus import stopwords
-import string
-import time
-import spacy
-import io
-from notebooks import handy_functions
+import services.WykopHandler as wh
 from google import genai
 from google.genai import types
 
@@ -22,8 +8,9 @@ api.authenticate()
 client = genai.Client(api_key="AIzaSyBVLiobdrNnyJT7zMN1HyLYa7bU52owuik")
 
 
-def trend_detection(tag_name, number_of_pages):
-    posts = handy_functions.get_posts_and_comments(tag_name, number_of_pages)
+def trend_detection(tag_name, number_of_pages, posts=None):
+    if posts == None:
+        posts = wh.get_posts_and_comments(tag_name, number_of_pages)
     posts = [tresc[2] for tresc in posts]
 
     sys_instruct = """
@@ -58,5 +45,5 @@ def trend_detection(tag_name, number_of_pages):
         )
     )
 
-    return {"text": response.text}
+    return response.text
 

@@ -14,7 +14,8 @@ interface FormData {
 }
 
 interface FormResponse{
-    text: string;
+    trends: string;
+    words: string;
 }
 
 const MainPage = () => {
@@ -27,7 +28,7 @@ const MainPage = () => {
         setLoadingResponse(true);
         setFormResponse(null)
         setError(false)
-        axios.get(`http://localhost:8000/trend/trend-detection`, {
+        axios.get(`http://localhost:8000/trend/combined`, {
             params: {
                 tag_name: formData.tags,
                 number_of_pages: formData.pages
@@ -43,6 +44,7 @@ const MainPage = () => {
               setLoadingResponse(false);
               setError(true);
           });
+        
     };
 
     return (
@@ -61,11 +63,18 @@ const MainPage = () => {
 
                 <div id="ChartSelector">
                     {loadingResponse ? <h1>Ładowanie...</h1>: null}
-                    {error ? <h1>Wystąpił błąd</h1>: null}
+                    {error ? <h1 className="text-danger">Wystąpił błąd</h1>: null}
                 </div>
 
                 <div id="ChartSelector">
-                    {formResponse ? <TrendResult text={formResponse.text}></TrendResult>: null}
+                    
+                    {formResponse ? <>
+                    <h1>Aktualne trendy</h1> 
+                    <TrendResult text={formResponse.trends}></TrendResult>
+                    <h1>Word Cloud</h1>
+                    <TrendResult text={formResponse.words}></TrendResult> 
+                    </>: null}
+                   
                 </div>
             </div>
 
