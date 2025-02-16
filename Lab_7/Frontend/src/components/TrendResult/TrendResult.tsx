@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface trendResultProps {
-    text: string;
+    text: string | null;
 }
 
 const TrendResult: React.FC<trendResultProps> = (props) => {

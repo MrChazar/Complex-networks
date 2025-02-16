@@ -2,6 +2,11 @@ from wykop import WykopAPI
 import time
 import spacy
 import services.WykopHandler as wh
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import spacy
+import io
+import base64
 
 
 
@@ -22,14 +27,21 @@ def generate_text_for_wordcloud(tag_name, number_of_pages, wpisy=None):
                       not token.is_stop and not token.is_punct and token.pos_ not in ["VERB", "AUX", "PRON"]]
     text = " ".join(cleaned_tokens)
 
-    """
-    Próba zapisu
-         buffer = io.BytesIO()
-        plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight')
-        buffer.seek(0)
-        files = {'file': ('wykres.png', buffer, 'image/png')}
-    """
-    return text
+    wordcloud = WordCloud(width=300, height=200, background_color='#3A506B').generate(text)
+
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close()
+
+    image_bytes = buf.getvalue()
+    buf.close()
+    image_base64 = base64.b64encode(image_bytes).decode('utf-8')
+
+    return image_base64
 
 
 

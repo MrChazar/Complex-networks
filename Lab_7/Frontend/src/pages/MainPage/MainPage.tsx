@@ -15,7 +15,7 @@ interface FormData {
 
 interface FormResponse{
     trends: string;
-    words: string;
+    image: string;
 }
 
 const MainPage = () => {
@@ -66,16 +66,16 @@ const MainPage = () => {
                     {error ? <h1 className="text-danger">Wystąpił błąd</h1>: null}
                 </div>
 
+                {formResponse ? <>
                 <div id="ChartSelector">
-                    
-                    {formResponse ? <>
                     <h1>Aktualne trendy</h1> 
                     <TrendResult text={formResponse.trends}></TrendResult>
-                    <h1>Word Cloud</h1>
-                    <TrendResult text={formResponse.words}></TrendResult> 
-                    </>: null}
-                   
                 </div>
+                <div id="ChartSelector">
+                    <h1>Word Cloud</h1>
+                    <img src={`data:image/png;base64,${formResponse.image}`} alt="WordCloud"  />
+                </div>
+                </>: null}
             </div>
 
             <footer className="py-3" id="footer">
