@@ -17,7 +17,7 @@ def get_posts_and_comments(tag, pages):
         except:
             continue
         for entry in entries:
-            wpis = [entry['id'], entry['author']['username'], str(entry['content']), entry['tags']]
+            wpis = [entry['id'], entry['author']['username'], str(entry['content']), entry['tags'], entry['created_at']]
             wpisy.append(wpis)
             time.sleep(1)
             try:
@@ -28,7 +28,7 @@ def get_posts_and_comments(tag, pages):
             i = 2
             while comments != []:
                 for comment in comments:
-                    wpisy.append([comment['id'], comment['author']['username'], comment['content'], comment['tags']])
+                    wpisy.append([comment['id'], comment['author']['username'], comment['content'], comment['tags'], entry['created_at'] ])
                 try:
                     comments = api.make_request(f"entries/{entry['id']}/comments?page={i}&limit=25")
                 except:

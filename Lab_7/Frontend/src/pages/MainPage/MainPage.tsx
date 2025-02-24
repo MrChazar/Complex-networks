@@ -63,7 +63,7 @@ const MainPage = () => {
 
                 <div id="ChartSelector">
                     {loadingResponse ? <h1>Ładowanie...</h1>: null}
-                    {error ? <h1 className="text-danger">Wystąpił błąd</h1>: null}
+                    {error ? <h1 className="text-danger">Wystąpił błąd: {error}</h1>: null}
                 </div>
 
                 {formResponse ? <>

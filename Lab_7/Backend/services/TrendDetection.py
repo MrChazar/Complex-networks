@@ -27,8 +27,8 @@ def trend_detection(tag_name, number_of_pages, posts=None):
     - Jeśli w danych nie ma powtarzających się tematów, zwróć odpowiedź: "Brak trendów".
 
     Zwróc tylko 3 najbardziej poruszane tematy w formie zwięzłego podsumowania.
-    1. Temat Jakiś
-    2. Temat inny
+    1. Temat Jakiś data trwania: 23.02.2024 - 24.02.2024
+    2. Temat inny data trwania: 22.02.2024 - 24.02.2024
     """
 
     text = ""
