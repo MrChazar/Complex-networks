@@ -11,7 +11,7 @@ client = genai.Client(api_key="AIzaSyBVLiobdrNnyJT7zMN1HyLYa7bU52owuik")
 def trend_detection(tag_name, number_of_pages, posts=None):
     if posts == None:
         posts = wh.get_posts_and_comments(tag_name, number_of_pages)
-    posts = [tresc[2] for tresc in posts]
+    posts = [f"Treść: {post[2]} data: {post[4]}" for post in posts]
 
     sys_instruct = """
     Jesteś analitykiem trendów na portalu społecznościowym. Twoim zadaniem jest analizować posty i komentarze użytkowników, aby wykryć najważniejsze trendy związane z danym tagiem (społecznością).

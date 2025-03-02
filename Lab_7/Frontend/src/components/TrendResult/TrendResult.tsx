@@ -7,7 +7,7 @@ interface trendResultProps {
 const TrendResult: React.FC<trendResultProps> = (props) => {
     return (
         <div>
-            <p>{props.text}</p>
+            <p style="white-space: pre-wrap;text-align: justify">{props.text}</p>
         </div>
     );
 };
